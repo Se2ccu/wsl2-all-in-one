@@ -1,6 +1,6 @@
 # FOR WSL2 based on ubuntu22.04
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y net-tools git curl zsh
+sudo apt install -y net-tools dnsutils iputils-ping git curl zsh
 
 git config --global http.sslVerify "false"
 
@@ -21,6 +21,28 @@ sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting
 # 重新加载zsh配置文件
 source ~/.zshrc
 
+# uv + python包
+wget -qO- https://astral.sh/uv/install.sh | sh
+# 自动补全
+echo 'eval "$(uv generate-shell-completion zsh)"' >> ~/.zshrc
+
+# semgrep代码静态扫描工具环境
+mkdir semgrep
+cd semgrep
+uv init python-venv
+uv add semgrep
+#uv run semgrep --severity ERROR --severity WARNING --config /mnt/d/CodeKing/Choul /mnt/d/code --sarif --sarif-output scan_results.sarif
+
+# python科学计算+编程环境
+uv init python-base
+uv add numpy scipy cryptography
+
+# gdb + gef
+sudo apt-get install gdb
+git clone https://github.com/hugsy/gef.git ~/.gef
+echo "source ~/.gef/gef.py" >> ~/.gdbinit
+
+
 # srsran-4G
 sudo apt-get install libuhd-dev uhd-host
 
@@ -36,8 +58,3 @@ make -j $(nproc)
 sudo make install
 sudo ldconfig
 srsran_4g_install_configs.sh user
-
-# gdb + gef
-sudo apt-get install gdb
-git clone https://github.com/hugsy/gef.git ~/.gef
-echo "source ~/.gef/gef.py" >> ~/.gdbinit
