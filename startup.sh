@@ -42,6 +42,12 @@ sudo apt-get install gdb
 git clone https://github.com/hugsy/gef.git ~/.gef
 echo "source ~/.gef/gef.py" >> ~/.gdbinit
 
+# 网络协议测试
+sudo apt install wireshark -y
+sudo dpkg-reconfigure wireshark-common
+sudo usermod -aG wireshark $USER
+newgrp wireshark
+
 
 # srsran-4G
 sudo apt-get install libuhd-dev uhd-host
