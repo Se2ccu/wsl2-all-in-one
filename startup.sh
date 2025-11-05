@@ -1,6 +1,6 @@
 # FOR WSL2 based on ubuntu22.04
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y net-tools dnsutils iputils-ping git curl zsh
+sudo apt install -y net-tools dnsutils iputils-ping git curl zsh build-essential                          
 
 git config --global http.sslVerify "false"
 
@@ -47,6 +47,11 @@ sudo apt install wireshark -y
 sudo dpkg-reconfigure wireshark-common
 sudo usermod -aG wireshark $USER
 newgrp wireshark
+
+# rust工具链安装
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup default stable
+#cargo install asnfuzzgen
 
 
 # srsran-4G
