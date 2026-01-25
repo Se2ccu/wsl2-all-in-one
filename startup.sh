@@ -1,8 +1,20 @@
 # FOR WSL2 based on ubuntu22.04
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y net-tools dnsutils iputils-ping git curl zsh build-essential                          
+sudo apt install -y net-tools dnsutils iputils-ping git curl zsh build-essential ca-certificates                          
 
+# git配置
 git config --global http.sslVerify "false"
+git config --global user.name "ccu"
+git config --global user.email "ccu@example.com"
+git init
+git add .
+git commit -m "first commit"
+git push 
+git pull
+
+#增加CA证书
+sudo cp mycert.crt /usr/local/share/ca-certificates/
+sudo update-ca-certificates
 
 # 用户切换终端为zsh
 chsh -s /bin/zsh
@@ -56,6 +68,7 @@ rustup default stable
 
 # srsran-4G
 sudo apt-get install libuhd-dev uhd-host
+sudo uhd_images_downloader --http-proxy="http://x.x.x.x:3128" --verbose
 
 # usb无法直接识别usrp b210需要绑定并映射usb，参考https://learn.microsoft.com/zh-cn/windows/wsl/enterprise
 
@@ -68,4 +81,7 @@ cmake ../
 make -j $(nproc)
 sudo make install
 sudo ldconfig
-srsran_4g_install_configs.sh user
+sudo srsran_4g_install_configs.sh user
+# 将基站或者ue的配置example文件同步到./root/.config/srsran/ue.conf or enb.conf
+sudo srsue
+sudo srsenb
