@@ -1,6 +1,17 @@
 # FOR WSL2 based on ubuntu22.04
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y net-tools dnsutils iputils-ping git curl zsh build-essential ca-certificates                          
+sudo apt install -y net-tools dnsutils iputils-ping git curl zsh build-essential ca-certificates
+
+# 网络代理
+export http_proxy="http://x.x.x.x:3128"
+export https_proxy=${http_proxy}
+
+# apt代理
+sudo vim /etc/apt/apt.conf
+Acquire::https::proxy "http://x.x.x.x:3128/";
+Acquire::http::proxy "http://x.x.x.x:3128/";
+Acquire::http::Verify-Peer "false";
+Acquire::https::Verify-Peer "false";
 
 # git配置
 git config --global http.sslVerify "false"
@@ -85,3 +96,18 @@ sudo srsran_4g_install_configs.sh user
 # 将基站或者ue的配置example文件同步到./root/.config/srsran/ue.conf or enb.conf
 sudo srsue
 sudo srsenb
+
+# open5gs.mongodb
+sudo apt update
+sudo apt install gnupg
+curl -fsSL https://pgp.mongodb.com/server-8.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor
+sudo apt update
+sudo apt install -y mongodb-org
+sudo systemctl start mongod
+sudo systemctl enable mongod
+#open5gs
+sudo -E add-apt-repository ppa:open5gs/latest # must add -E，否则代理环境变量无法获取
+sudo apt update
+sudo apt install open5gs
+
+
