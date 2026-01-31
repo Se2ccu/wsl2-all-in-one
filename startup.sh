@@ -14,6 +14,8 @@ Acquire::http::Verify-Peer "false";
 Acquire::https::Verify-Peer "false";
 
 # git配置
+ssh-keygen -t ed25519 -C "your_email@example.com"
+# add to github.com ssh key
 git config --global http.sslVerify "false"
 git config --global user.name "ccu"
 git config --global user.email "ccu@example.com"
@@ -79,7 +81,7 @@ rustup default stable
 
 # srsran-4G
 sudo apt-get install libuhd-dev uhd-host
-sudo uhd_images_downloader --http-proxy="http://x.x.x.x:3128" --verbose
+sudo -E uhd_images_downloader --verbose  # 需要单独继承代理环境变量
 
 # usb无法直接识别usrp b210需要绑定并映射usb，参考https://learn.microsoft.com/zh-cn/windows/wsl/enterprise
 
