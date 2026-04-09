@@ -1,3 +1,6 @@
+# ubuntu24.04 替换清华镜像源
+sudo sed -i 's|http://archive\.ubuntu\.com/ubuntu|https://mirrors.tuna.tsinghua.edu.cn/ubuntu|g' /etc/apt/sources.list.d/ubuntu.sources
+
 # FOR WSL2 based on ubuntu22.04
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y net-tools dnsutils iputils-ping git curl zsh build-essential ca-certificates
