@@ -46,6 +46,26 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 # sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="ys"/' ~/.zshrc
 sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting z extract web-search)/' ~/.zshrc
 
+# wsl 增加访问v2rayN代理 增加到~/.zshrc文件中，并source ~/.zshrc
+# 获取宿主机 (Windows) 的 IP 地址
+export HOST_IP=$(ip route show default | awk '{print $3}')
+
+# 定义代理开关函数
+function proxy_on() {
+    export http_proxy="http://${HOST_IP}:10808"
+    export https_proxy="http://${HOST_IP}:10808"
+    export all_proxy="socks5://${HOST_IP}:10808"
+    export no_proxy="localhost,127.0.0.1,::1,.local,volces.com"
+    echo -e "Proxy is ON. \nHost IP: ${HOST_IP}"
+}
+
+function proxy_off() {
+    unset http_proxy https_proxy all_proxy no_proxy
+    echo "Proxy is OFF."
+}
+
+proxy_on
+
 # 重新加载zsh配置文件
 source ~/.zshrc
 
