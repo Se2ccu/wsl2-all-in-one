@@ -69,6 +69,28 @@ proxy_on
 # 重新加载zsh配置文件
 source ~/.zshrc
 
+
+# nodejs安装
+# Download and install nvm:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | bash
+# in lieu of restarting the shell
+\. "$HOME/.nvm/nvm.sh"
+# Download and install Node.js:
+nvm install 26
+# Verify the Node.js version:
+node -v # Should print "v26.13.0".
+# Verify npm version:
+npm -v # Should print "11.20.0".
+
+# dsh deepseek harness
+npx @deepseek-ai/dsh web
+dsh --version
+npx --yes @deepseek-ai/dsh@latest web
+
+# 安装插件市场
+npm install -g pnpm
+dsh plugin --profile web add dshmarket
+
 # uv + python包
 wget -qO- https://astral.sh/uv/install.sh | sh
 # 自动补全
